@@ -39,6 +39,7 @@
 	 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
     <style>
         body {
             display: flex;
@@ -48,9 +49,17 @@
             height: 100vh;
             background-color: black;
         }
-
+        @media screen and (min-width: 1000px) {
         h1 {
-            font-size: 96px;
+                font-size: 86px;
+				font-family: 'Dela Gothic One', cursive;
+				color: yellow
+        }
+    }
+
+    @media screen and (max-width: 999px) {
+        h1 {
+                font-size: 55px;
 				font-family: 'Dela Gothic One', cursive;
 				color: yellow
         }
@@ -61,6 +70,15 @@
 				align-items: center;
 				justify-content: center;
         }
+    }
+    @media screen and (min-width: 1000px) {
+        #countdown {
+            display: flex;
+            font-size: 75px;
+				align-items: center;
+				justify-content: center;
+        }
+    }
 
         #countdown div {
             margin: 0 10px;
