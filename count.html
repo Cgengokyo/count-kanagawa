@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>2024年度神奈川県公立高校入試まで</title>
+	 <script>
+        const colors = ["color1", "color2", "color3", "color4", "color5", "color6", "color7", "color8", "color9", "color10", "color11", "color12", "color13", "color14", "color15"];
+        let currentColorIndex = 0;
+
+        function updateColor() {
+            const countdownDivs = document.querySelectorAll("#countdown div");
+            countdownDivs.forEach((div) => {
+                div.className = colors[currentColorIndex];
+            });
+
+            currentColorIndex = (currentColorIndex + 1) % colors.length;
+        }
+
+        function updateCountdown() {
+            const targetDate = new Date("2024-02-14T09:00:00"); // ターゲットの日付を設定
+            const currentDate = new Date(); // 現在の日付を取得
+            const timeDifference = targetDate - currentDate; // 残り時間を計算
+
+            const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+
+            document.getElementById("days").textContent = days;
+            document.getElementById("hours").textContent = hours;
+            document.getElementById("minutes").textContent = minutes;
+            document.getElementById("seconds").textContent = seconds;
+        }
+
+        setInterval(updateColor, 0.1); // 0.1秒ごとにカラーを切り替える
+        setInterval(updateCountdown, 1000); // 1秒ごとにカウントダウンを更新する
+    </script>
+	 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+	 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&display=swap" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: black;
+        }
+
+        h1 {
+            font-size: 96px;
+				font-family: 'Dela Gothic One', cursive;
+				color: yellow
+        }
+
+        #countdown {
+            display: flex;
+            font-size: 75px;
+				align-items: center;
+				justify-content: center;
+        }
+
+        #countdown div {
+            margin: 0 10px;
+        }
+
+        /* カウントダウンのカラーパレット */
+        .color1 {
+            color: red;
+        }
+
+        .color2 {
+            color: orange;
+        }
+
+        .color3 {
+            color: yellow;
+        }
+
+        .color4 {
+            color: green;
+        }
+
+        .color5 {
+            color: blue;
+        }
+
+        .color6 {
+            color: indigo;
+        }
+
+        .color7 {
+            color: violet;
+        }
+		  
+		  .color8 {
+            color: lime;
+        }
+		  
+		  .color9 {
+            color: lightcyan;
+        }
+		  
+		  .color10 {
+            color: cadetblue;
+        }
+		  
+		  .color11 {
+            color: deepskyblue;
+        }
+		  
+		  .color12 {
+            color: olive;
+        }
+		  
+		  .color13 {
+            color: plum;
+        }
+		  
+		  .color14 {
+            color: seagreen;
+        }
+		  
+		  .color15 {
+            color: purple;
+        }
+    </style>
+</head>
+<body>
+    <h1>2024年度神奈川県公立高校入試まで</h1>
+	 <font face="ＭＳ Ｐ明朝">
+    <div id="countdown">
+        <div class="color1">
+            <span id="days">0</span> 日
+        </div>
+        <div class="color2">
+            <span id="hours">0</span> 時間
+        </div>
+        <div class="color3">
+            <span id="minutes">0</span> 分
+        </div>
+        <div class="color4">
+            <span id="seconds">0</span> 秒
+        </div>
+    </div>
+</font>
+</body>
+</html>
