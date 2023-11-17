@@ -18,7 +18,7 @@
         }
 
         function updateCountdown() {
-            const targetDate = new Date("2024-02-14T09:00:00"); // ターゲットの日付を設定
+            const targetDate = new Date("2024-02-14T00:00:00"); // ターゲットの日付を設定
             const currentDate = new Date(); // 現在の日付を取得
             const timeDifference = targetDate - currentDate; // 残り時間を計算
 
@@ -53,20 +53,42 @@
             background-color: black;
         }
         @media screen and (min-width: 1000px) {
+             /* pcのスタイル */
         h1 {
                 font-size: 86px;
 				font-family: 'Dela Gothic One', cursive;
 				color: yellow
         }
+
+        .pc-only {
+            display: block;
+        }
+
+        .mobile-only {
+            display: none;
+        }
     }
 
     @media screen and (max-width: 999px) {
+        /* スマホのスタイル */
         h1 {
                 font-size: 55px;
 				font-family: 'Dela Gothic One', cursive;
 				color: yellow
         }
 
+        .pc-only {
+                display: none;
+            }
+
+            .mobile-only {
+            display: block;
+            font-size: 87px;
+			font-family: 'Dela Gothic One', cursive;
+			color: yellow
+
+    }
+         
         #countdown {
             display: flex;
             font-size: 75px;
@@ -152,7 +174,11 @@
     </style>
 </head>
 <body>
-    <h1>2024年度神奈川県公立高校入試まで</h1>
+    <div class="pc-only">
+    <h1>2024年度神奈川県公立高校入試まで</h1></div>
+    <div class="mobile-only">⠀ ⠀  ⠀2024年度
+    <br>
+    神奈川県公立高校入試</div>
     <div id="countdown">
         <div class="color1">
             <span id="days">0</span> 日
