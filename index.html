@@ -75,6 +75,10 @@
         .mobile-only {
             display: none;
         }
+
+        .mobile-only-2 {
+            display: none;
+        }
     }
 
     @media screen and (max-width: 999px) {
@@ -90,12 +94,24 @@
             }
 
             .mobile-only {
-            display: block;
-            font-size: 87px;
-			font-family: 'Dela Gothic One', cursive;
-			color: yellow
+    display: block;
+    font-size: 87px;
+    font-family: 'Dela Gothic One', cursive;
+    color: yellow; 
+    justify-content: center;
+    align-items: center; 
+}
 
-    }
+    .mobile-only-2 {
+    display: block;
+    font-size: 87px;
+    font-family: 'Dela Gothic One', cursive;
+    color: yellow; 
+    justify-content: center;
+    align-items: center;
+}
+
+
          
         #countdown {
             display: flex;
@@ -312,7 +328,8 @@ input:checked ~ .circle {
   <div class="pc-only">
     <h1>2024年度神奈川県公立高校入試まで</h1>
   </div>
-  <div class="mobile-only">⠀ ⠀ ⠀2024年度 <br> 神奈川県公立高校入試</div>
+  <div class="mobile-only">2024年度</div> <br>
+  <div class="mobile-only-2">神奈川県公立高校入試</div>
   <div id="countdown">
     <div class="color1"> <span id="days">0</span> 日 </div>
     <div class="color11"> <span id="hours">0</span> 時間 </div>
