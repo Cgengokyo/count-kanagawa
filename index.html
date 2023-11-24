@@ -25,32 +25,48 @@
          
                  currentColorIndex = (currentColorIndex + 1) % colors.length;
              }
-         
-             function updateCountdown() {
-                 const targetDate = new Date("2024-02-14T00:00:00"); // ターゲットの日付を設定
-                 const currentDate = new Date(); // 現在の日付を取得
-                 const timeDifference = targetDate - currentDate; // 残り時間を計算
-         
-                 const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-                 const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                 const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
-                 const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
-         
-                 document.getElementById("days").textContent = days;
-                 document.getElementById("hours").textContent = hours;
-                 document.getElementById("minutes").textContent = minutes;
-                 document.getElementById("seconds").textContent = seconds;
-         
-                  // #rgb-on の更新
-         rgbOnCountdownDiv.querySelector("#days").textContent = days;
-         rgbOnCountdownDiv.querySelector("#hours").textContent = hours;
-         rgbOnCountdownDiv.querySelector("#minutes").textContent = minutes;
-         rgbOnCountdownDiv.querySelector("#seconds").textContent = seconds;
-             }
-         
-             setInterval(updateColor, 0.01); // 0.01秒ごとにカラーを切り替える
-             setInterval(updateCountdown, 1000); // 1秒ごとにカウントダウンを更新する
-         
+
+             let alertShown = false;
+
+function updateCountdown() {
+    const targetDate = new Date("2023-02-14T00:00:00"); // ターゲットの日付を設定
+    const currentDate = new Date(); // 現在の日付を取得
+    const timeDifference = targetDate - currentDate; // 残り時間を計算
+
+    const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+
+    document.getElementById("days").textContent = days;
+    document.getElementById("hours").textContent = hours;
+    document.getElementById("minutes").textContent = minutes;
+    document.getElementById("seconds").textContent = seconds;
+
+    // #rgb-on の更新
+    rgbOnCountdownDiv.querySelector("#days").textContent = days;
+    rgbOnCountdownDiv.querySelector("#hours").textContent = hours;
+    rgbOnCountdownDiv.querySelector("#minutes").textContent = minutes;
+    rgbOnCountdownDiv.querySelector("#seconds").textContent = seconds;
+
+    // カウントダウンが終了したらテキストを表示
+    if (timeDifference <= 0 && !alertShown) {
+        alertShown = true;
+        const userResponse = window.confirm("カウントダウンが終了しました。\n「OK」をクリックしていただくと、別のページへリダイレクトします。\n「キャンセル」をクリックしていただくと、前のページへリダイレクトします。");
+
+        if (userResponse) {
+            // OKがクリックされた場合の処理
+            window.location.href = "countdown-finished.html";
+        } else {
+            // Cancelがクリックされた場合の処理
+            window.history.back();
+        }
+    }
+}
+
+setInterval(updateCountdown, 1000); // 1秒ごとにカウントダウンを更新する
+setInterval(updateColor, 10); // 0.01秒ごとにカラーを切り替える
+
          console.log("%cHey!", "color: #88F; font-size: 500%; font-weight:bold;text-shadow: rgb(0, 0, 0) 3px 0px 0px, rgb(0, 0, 0) 2.83333px 0.983333px 0px, rgb(0, 0, 0) 2.35px 1.85px 0px, rgb(0, 0, 0) 1.61667px 2.51667px 0px, rgb(0, 0, 0) 0.7px 2.91667px 0px, rgb(0, 0, 0) -0.283333px 2.98333px 0px, rgb(0, 0, 0) -1.25px 2.73333px 0px, rgb(0, 0, 0) -2.06667px 2.16667px 0px, rgb(0, 0, 0) -2.66667px 1.36667px 0px, rgb(0, 0, 0) -2.96667px 0.416667px 0px, rgb(0, 0, 0) -2.95px -0.566667px 0px, rgb(0, 0, 0) -2.6px -1.5px 0px, rgb(0, 0, 0) -1.96667px -2.26667px 0px, rgb(0, 0, 0) -1.11667px -2.78333px 0px, rgb(0, 0, 0) -0.133333px -3px 0px, rgb(0, 0, 0) 0.85px -2.88333px 0px, rgb(0, 0, 0) 1.75px -2.43333px 0px, rgb(0, 0, 0) 2.45px -1.73333px 0px, rgb(0, 0, 0) 2.88333px -0.833333px 0px;");
       </script>
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
@@ -262,6 +278,20 @@
          /* PCのスタイルここまで */}
 
          /*共通のスタイル*/
+         .copyright {
+         text-align: center; /* コピーライトを中央に配置する */
+         position: relative;
+         border: solid 2px red;
+         display: inline-block;
+         width: 50em;
+         height: 4em;
+         }
+  
+         .copyright font {
+         font-size: 30px; /* コピーライトのフォントサイズを0.9remに変更 */
+         }
+
+
          #countdown div {
          margin: 0 10px;
          }
@@ -427,6 +457,14 @@
          <div class="color11"> <span id="hours">0</span> 時間 </div>
          <div class="color8"> <span id="minutes">0</span> 分 </div>
          <div class="color2"> <span id="seconds">0</span> 秒 </div>
+      </div>
+      <br><br><br><br><br><br><br><br>
+      <div class="copyright" style="padding: 1px; border: 3px solid #333333; border-radius: 10px;" align="center">
+        <footer>
+          <h2 style="text-align:center">
+            <font color="white">
+              <font face="ＭＳ Ｐ明朝">Copyright © B.C 114514 Cgengokyo Inc. All Rights Reserved.</h2>
+        </footer>
       </div>
       <script src="count.js"></script>
    </body>
