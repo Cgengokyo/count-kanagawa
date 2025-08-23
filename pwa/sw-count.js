@@ -64,8 +64,9 @@ self.addEventListener('fetch', (event) => {
         return resp;
       }).catch(() => {
         // 画像等で失敗した場合は代替を返す（省略）。
-        return caches.match('/offline.html');
+        return caches.match('/count-kanagawa/offline.html');
       });
     })
   );
 });
+
