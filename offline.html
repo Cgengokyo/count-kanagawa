@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+　<meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>オフライン</title>
+  <link rel="icon" type="image/png" href="favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="shortcut icon" href="favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <style>
+    body{
+        font-family: sans-serif;
+        background:#0a0a1a;
+        color:#e0e0e0;display:flex;
+        align-items:center;justify-content:center;
+        height:100vh;
+        margin:0
+    }
+
+    .card{max-width:720px;
+        padding:28px;border-radius:12px;
+        background:#101026;border:1px solid #2b2b4a;
+        text-align:center
+    }
+
+    h1{
+        color:#00ffff;
+        margin-bottom:8px
+    }
+
+    p{
+        opacity:0.9
+    }
+
+    .btn {
+    display: inline-block;
+    padding: 8px 15px;
+    border-radius: 999px;
+    font-weight: 700;
+    transition: transform .2s, opacity .2s;
+    font-family: 'Orbitron', sans-serif;
+    outline: none;
+    text-decoration: none;
+    }
+
+    .btn-primary {
+    background-color: #00ffff;
+    color: #0a0a1a;
+    border: 2px solid #00ffff; 
+    transition: background-color .18s ease, color .18s ease, transform .12s ease;
+    outline: none;
+    }
+
+    .btn-primary:hover {
+    background-color: transparent;
+    color: #00ffff;
+    transform: scale(1.05);
+    }
+
+    .btn-primary:active {
+    transform: scale(.98);
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>オフラインです</h1>
+    <p>ネットワークに接続されていないか、ページを取得できませんでした。<br>トップへは <a href="count.html" class="btn btn-primary" role="button" >こちら</a> から戻れます。</p>
+  </div>
+</body>
+</html>
