@@ -2,7 +2,7 @@
   "name": "2026年度 神奈川県公立高校入試まで",
   "short_name" : "公立高校入試カウントダウン",
   "description": "2026年度神奈川県公立高校入試までのカウントダウンを行います。",
-  "start_url": "/count-kanagawa/count.html",
+  "start_url": "/count-kanagawa/",
   "display": "standalone",
   "background_color": "#0a0a1a",
   "theme_color": "#00ffff",
