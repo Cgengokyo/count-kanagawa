@@ -1,11 +1,11 @@
 const CACHE_NAME = 'count-cache-v1';
 const PRECACHE_URLS = [
-  '/',
-  '/count.html',
-  '/offline.html',
-  '/favicon-192x192.png',
-  '/favicon-512x512.png',
-  '/apple-touch-icon.png'
+  '/count-kanagawa/',
+  '/count-kanagawa/index.html',
+  '/count-kanagawa/offline.html',
+  '/count-kanagawa/favicon-192x192.png',
+  '/count-kanagawa/favicon-512x512.png',
+  '/count-kanagawa/apple-touch-icon.png'
 ];
 
 // install: 事前キャッシュ
