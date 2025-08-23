@@ -528,7 +528,7 @@
 
   if ('serviceWorker' in navigator) {
   window.addEventListener('load', function() {
-    navigator.serviceWorker.register('/count-kanagawa/pwa/sw-count.js', { scope: '/count-kanagawa/' })
+    navigator.serviceWorker.register('/pwa/sw-count.js', { scope: '/count-kanagawa/' })
       .then(function(reg) {
         console.log('Service worker registered with scope:', reg.scope);
       }).catch(function(err) {
