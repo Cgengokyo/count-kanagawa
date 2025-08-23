@@ -11,7 +11,7 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <link rel="shortcut icon" href="favicon.ico" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
-  <link rel="manifest" href="/pwa/app.webmanifest" />
+  <link rel="manifest" href="/count-kanagawa/pwa/app.webmanifest" />
   <style>
     :root{
       --bg:#0a0a1a;
@@ -528,7 +528,7 @@
 
   if ('serviceWorker' in navigator) {
   window.addEventListener('load', function() {
-    navigator.serviceWorker.register('/pwa/sw-count.js', { scope: '/count-kanagawa/' })
+    navigator.serviceWorker.register('/count-kanagawa/pwa/sw-count.js', { scope: '/count-kanagawa/' })
       .then(function(reg) {
         console.log('Service worker registered with scope:', reg.scope);
       }).catch(function(err) {
