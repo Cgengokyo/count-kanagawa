@@ -1,53 +1,67 @@
 (function () {
-  const root = document.body;
-  const month = Number(root.dataset.examMonth || 2);
-  const day = Number(root.dataset.examDay || 17);
-  const showCentisecondsByDefault = root.dataset.showCs !== 'false';
-  const displayMode = root.dataset.displayMode || 'grid';
-  const examHour = Number(root.dataset.examHour || 0);
-  const examMinute = Number(root.dataset.examMinute || 0);
-  const colorIntervalMs = 150;
-  const updateIntervalMs = 50;
+  const countdownDiv = document.getElementById('countdown');
+  const rgbDiv = document.getElementById('rgb-on');
+  const rgbCheckbox = document.getElementById('switch');
+  const msCheckbox = document.getElementById('ms-switch');
+  const examTimeCheckbox = document.getElementById('exam-time-switch');
+  const pageTitle = document.getElementById('page-title');
+  const yearTargets = document.querySelectorAll('[data-exam-year]');
+  const fullTitleTargets = document.querySelectorAll('[data-exam-title]');
+  const rgbTitle = document.querySelector('.switch-title.rgb');
+  const msTitle = document.querySelector('.switch-title.ms');
+  const examTimeTitle = document.querySelector('.switch-title.exam-time');
+
+  const units = ['days', 'hours', 'minutes', 'seconds'];
   const colors = [
     'color1', 'color2', 'color3', 'color4', 'color5',
     'color6', 'color7', 'color8', 'color9', 'color10',
     'color11', 'color12', 'color13', 'color14', 'color15',
     'color16', 'color17', 'color18', 'color19', 'color20'
   ];
-
-  const rgbCheckbox = document.getElementById('switch');
-  const msCheckbox = document.getElementById('ms-switch');
-  const countdownDiv = document.getElementById('countdown');
-  const rgbDiv = document.getElementById('rgb-on');
-  const pageTitle = document.getElementById('page-title');
-  const yearTargets = document.querySelectorAll('[data-exam-year]');
-  const fullTitleTargets = document.querySelectorAll('[data-exam-title]');
-  const modeCheckbox = document.getElementById('exam-time-switch');
-  const modeTitle = document.querySelector('.switch-title.exam-time');
-  const rgbTitle = document.querySelector('.switch-title.rgb');
-  const msTitle = document.querySelector('.switch-title.ms');
-
-  const units = ['days', 'hours', 'minutes', 'seconds'];
   const storageKeys = {
     rgb: 'kanagawaCountdown.rgb',
     ms: 'kanagawaCountdown.ms',
     examTime: 'kanagawaCountdown.examTime'
   };
-  let showCentiseconds = showCentisecondsByDefault;
+
+  let showCentiseconds = true;
   let countdownTimer = null;
   let colorTimer = null;
   let colorIndex = 0;
+  let finishedRedirected = false;
   let useExamTime = false;
+
+  function buildTargetDate(year, monthIndex, day) {
+    const hour = useExamTime ? 9 : 0;
+    const minute = useExamTime ? 20 : 0;
+    return new Date(year, monthIndex, day, hour, minute, 0, 0);
+  }
+
+  function getExamDate(year) {
+    if (year === 2026) {
+      return buildTargetDate(2026, 1, 17);
+    }
+
+    for (let day = 14; day <= 17; day += 1) {
+      const date = new Date(year, 1, day, 0, 0, 0, 0);
+      const weekday = date.getDay();
+      if (weekday !== 0 && weekday !== 6) {
+        return buildTargetDate(year, 1, day);
+      }
+    }
+
+    return buildTargetDate(year, 1, 17);
+  }
 
   function getTargetDate(now) {
     const currentYear = now.getFullYear();
-    const targetHour = useExamTime ? 9 : examHour;
-    const targetMinute = useExamTime ? 20 : examMinute;
-    const thisYearExam = new Date(currentYear, month - 1, day, targetHour, targetMinute, 0, 0);
-    const examYear = now < thisYearExam ? currentYear : currentYear + 1;
-    const target = new Date(examYear, month - 1, day, targetHour, targetMinute, 0, 0);
+    const thisYearExam = getExamDate(currentYear);
 
-    return { year: examYear, target };
+    if (now < thisYearExam) {
+      return { year: currentYear, target: thisYearExam };
+    }
+
+    return { year: currentYear + 1, target: getExamDate(currentYear + 1) };
   }
 
   function updateTitle(now) {
@@ -55,6 +69,7 @@
     const title = `${year}年度 神奈川県公立高校入試まで`;
 
     document.title = title;
+
     if (pageTitle && yearTargets.length === 0 && fullTitleTargets.length === 0) {
       pageTitle.textContent = title;
     }
@@ -85,14 +100,21 @@
 
   function tick() {
     const now = new Date();
-    const target = updateTitle(now);
-    const diff = Math.max(0, target.getTime() - now.getTime());
+    const targetDate = updateTitle(now);
+    const diff = targetDate.getTime() - now.getTime();
 
-    const days = Math.floor(diff / 86400000);
-    const hours = Math.floor((diff % 86400000) / 3600000);
-    const minutes = Math.floor((diff % 3600000) / 60000);
-    const seconds = Math.floor((diff % 60000) / 1000);
-    const centiseconds = Math.floor((diff % 1000) / 10);
+    if (diff <= 0 && !finishedRedirected) {
+      finishedRedirected = true;
+      window.location.href = './countdown-finished.html';
+      return;
+    }
+
+    const safeDiff = Math.max(0, diff);
+    const days = Math.floor(safeDiff / 86400000);
+    const hours = Math.floor((safeDiff % 86400000) / 3600000);
+    const minutes = Math.floor((safeDiff % 3600000) / 60000);
+    const seconds = Math.floor((safeDiff % 60000) / 1000);
+    const centiseconds = Math.floor((safeDiff % 1000) / 10);
 
     const values = {
       days: String(days),
@@ -125,11 +147,13 @@
       rgbCheckbox.checked = isOn;
       rgbCheckbox.setAttribute('aria-checked', isOn ? 'true' : 'false');
     }
+
     if (countdownDiv) {
-      countdownDiv.style.display = isOn ? 'none' : displayMode;
+      countdownDiv.style.display = isOn ? 'none' : 'grid';
     }
+
     if (rgbDiv) {
-      rgbDiv.style.display = isOn ? displayMode : 'none';
+      rgbDiv.style.display = isOn ? 'grid' : 'none';
       rgbDiv.setAttribute('aria-hidden', isOn ? 'false' : 'true');
     }
 
@@ -140,6 +164,7 @@
 
   function applyMsState(isOn) {
     showCentiseconds = isOn;
+
     if (msCheckbox) {
       msCheckbox.checked = isOn;
       msCheckbox.setAttribute('aria-checked', isOn ? 'true' : 'false');
@@ -154,13 +179,17 @@
 
   function applyExamTimeState(isOn) {
     useExamTime = isOn;
-    if (modeCheckbox) {
-      modeCheckbox.checked = isOn;
-      modeCheckbox.setAttribute('aria-checked', isOn ? 'true' : 'false');
+
+    if (examTimeCheckbox) {
+      examTimeCheckbox.checked = isOn;
+      examTimeCheckbox.setAttribute('aria-checked', isOn ? 'true' : 'false');
     }
-    if (modeTitle) {
-      modeTitle.textContent = isOn ? '9:20' : '0:00';
+
+    if (examTimeTitle) {
+      examTimeTitle.textContent = isOn ? '9:20' : '0:00';
     }
+
+    finishedRedirected = false;
     tick();
   }
 
@@ -187,11 +216,12 @@
   function startTimers() {
     if (!countdownTimer) {
       tick();
-      countdownTimer = window.setInterval(tick, updateIntervalMs);
+      countdownTimer = window.setInterval(tick, 50);
     }
+
     if (!colorTimer) {
       cycleColors();
-      colorTimer = window.setInterval(cycleColors, colorIntervalMs);
+      colorTimer = window.setInterval(cycleColors, 150);
     }
   }
 
@@ -200,6 +230,7 @@
       clearInterval(countdownTimer);
       countdownTimer = null;
     }
+
     if (colorTimer) {
       clearInterval(colorTimer);
       colorTimer = null;
@@ -220,10 +251,10 @@
     });
   }
 
-  if (modeCheckbox) {
-    modeCheckbox.addEventListener('change', () => {
-      applyExamTimeState(modeCheckbox.checked);
-      writeStoredBool(storageKeys.examTime, modeCheckbox.checked);
+  if (examTimeCheckbox) {
+    examTimeCheckbox.addEventListener('change', () => {
+      applyExamTimeState(examTimeCheckbox.checked);
+      writeStoredBool(storageKeys.examTime, examTimeCheckbox.checked);
     });
   }
 
@@ -236,7 +267,7 @@
   });
 
   applyRgbState(readStoredBool(storageKeys.rgb, false));
-  applyMsState(readStoredBool(storageKeys.ms, showCentisecondsByDefault));
+  applyMsState(readStoredBool(storageKeys.ms, true));
   applyExamTimeState(readStoredBool(storageKeys.examTime, false));
   startTimers();
 
