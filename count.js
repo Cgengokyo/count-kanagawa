@@ -42,6 +42,10 @@
       return buildTargetDate(2026, 1, 17);
     }
 
+    if (year === 2027) {
+      return buildTargetDate(2027, 1, 16);
+    }
+
     for (let day = 14; day <= 17; day += 1) {
       const date = new Date(year, 1, day, 0, 0, 0, 0);
       const weekday = date.getDay();
